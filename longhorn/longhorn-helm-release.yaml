@@ -2,15 +2,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: traefik-release
-  namespace: flux-system
+  name: longhorn-release
+  namespace: longhorn-system
 spec:
   chart:
     spec:
-      chart: traefik
+      chart: longhorn
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: traefik-charts
-      version: 38.0.1
+        name: longhorn-repo
+        namespace: flux-system
+      version: v1.10.1
   interval: 1m0s
