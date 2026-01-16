@@ -1,0 +1,83 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: planka-app
+  namespace: productivity
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  values:
+    controllers:
+      planka-app:
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+        containers:
+          app:
+            image:
+              repository: ghcr.io/linuxserver/planka
+              tag: latest
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: "Europe/Madrid"
+              BASE_URL: "https://planka.tailnet.core.local"
+              DATABASE_URL: "postgresql://planka:planka@localhost:5432/planka"
+              SECRET_KEY: "REDACTED"
+              DEFAULT_ADMIN_EMAIL: "admin@localhost"
+              DEFAULT_ADMIN_USERNAME: "admin"
+              DEFAULT_ADMIN_PASSWORD: "admin"
+              DEFAULT_ADMIN_NAME: "Admin"
+              TRUST_PROXY: "1"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+          postgresql:
+            image:
+              repository: postgres
+              tag: "16-alpine"
+            env:
+              POSTGRES_USER: "planka"
+              POSTGRES_PASSWORD: "planka"
+              POSTGRES_DB: "planka"
+              PGDATA: "/var/lib/postgresql/data/pgdata"
+
+    service:
+      planka-app:
+        controller: planka-app
+        ports:
+          http:
+            port: 1337
+
+    persistence:
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: longhorn-retain
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        advancedMounts:
+          planka-app:
+            app:
+              - path: /config
+      postgresql:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: longhorn-retain
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        advancedMounts:
+          planka-app:
+            postgresql:
+              - path: /var/lib/postgresql/data
