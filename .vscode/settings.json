@@ -1,10 +1,37 @@
 {
   "yaml.schemas": {
-    "https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json": "**/ks.yaml",
-    "https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json": "**/helm-release.yaml",
-    "https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json": "**/*-helm-repo.yaml",
-    "https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json": "**/oci-repositories/*.yaml",
-    "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/namespace-v1.json": "**/namespace.yaml",
-    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json": "**/postgresql/cluster.yaml"
+    "https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json": [
+      "clusters/**/*.yaml"
+    ],
+    "https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json": [
+      "infrastructure/controllers/traefik.yaml",
+      "infrastructure/controllers/longhorn.yaml",
+      "infrastructure/controllers/pgo.yaml",
+      "infrastructure/controllers/reflector.yaml",
+      "apps/**/helm-release.yaml"
+    ],
+    "https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json": [
+      "infrastructure/sources/*-helm-repo.yaml"
+    ],
+    "https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json": [
+      "infrastructure/sources/*-oci.yaml"
+    ],
+    "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/namespace-v1.json": [
+      "infrastructure/controllers/namespaces.yaml",
+      "apps/**/namespace.yaml"
+    ],
+    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json": [
+      "infrastructure/configs/postgresql-cluster.yaml"
+    ],
+    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json": [
+      "infrastructure/configs/*-ingress.yaml",
+      "apps/**/ingress.yaml"
+    ],
+    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/middleware_v1alpha1.json": [
+      "infrastructure/configs/*-middleware.yaml"
+    ],
+    "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/storageclass-storage-v1.json": [
+      "infrastructure/configs/*-storageclass.yaml"
+    ]
   }
 }

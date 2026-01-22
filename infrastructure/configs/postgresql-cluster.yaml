@@ -3,15 +3,24 @@ kind: PostgresCluster
 metadata:
   name: shared
   namespace: storage
+  annotations:
+    postgres-operator.crunchydata.com/autoCreateUserSchema: "true"
 spec:
   metadata:
-      annotations:
-        reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
-        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "productivity"
-        reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-        reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "productivity"
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "productivity"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "productivity"
 
   postgresVersion: 16
+
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        pg_hba:
+          - hostssl all all all md5
+          - hostnossl all all all md5
 
   instances:
     - name: instance1
@@ -25,6 +34,15 @@ spec:
             storage: 5Gi
 
   users:
+    - name: postgres
+      databases:
+        - postgres
+      options: SUPERUSER
+      password: &password
+        type: AlphaNumeric
     - name: planka
       databases:
-        - planka
+        - public
+      password: *password
+      options: 'CREATEDB CREATEROLE'
+
