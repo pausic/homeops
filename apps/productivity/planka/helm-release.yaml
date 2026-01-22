@@ -26,7 +26,11 @@ spec:
               PGID: "1000"
               TZ: "Europe/Madrid"
               BASE_URL: "https://planka.tailnet.core.local"
-              DATABASE_URL: "postgresql://planka:planka@localhost:5432/planka"
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: shared-pguser-planka
+                    key: uri
               SECRET_KEY: "REDACTED"
               DEFAULT_ADMIN_EMAIL: "admin@localhost"
               DEFAULT_ADMIN_USERNAME: "admin"
@@ -43,15 +47,6 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
-          postgresql:
-            image:
-              repository: postgres
-              tag: "16-alpine"
-            env:
-              POSTGRES_USER: "planka"
-              POSTGRES_PASSWORD: "planka"
-              POSTGRES_DB: "planka"
-              PGDATA: "/var/lib/postgresql/data/pgdata"
 
     service:
       planka-app:
@@ -71,13 +66,3 @@ spec:
           planka-app:
             app:
               - path: /config
-      postgresql:
-        enabled: true
-        type: persistentVolumeClaim
-        storageClass: longhorn-retain
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        advancedMounts:
-          planka-app:
-            postgresql:
-              - path: /var/lib/postgresql/data
