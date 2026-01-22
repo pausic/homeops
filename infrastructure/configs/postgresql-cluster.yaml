@@ -28,4 +28,3 @@ spec:
     - name: planka
       databases:
         - planka
-
