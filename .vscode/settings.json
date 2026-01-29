@@ -6,7 +6,7 @@
     "https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json": [
       "infrastructure/controllers/traefik.yaml",
       "infrastructure/controllers/longhorn.yaml",
-      "infrastructure/controllers/pgo.yaml",
+      "infrastructure/controllers/cnpg.yaml",
       "infrastructure/controllers/reflector.yaml",
       "apps/**/helm-release.yaml"
     ],
@@ -19,9 +19,6 @@
     "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/namespace-v1.json": [
       "infrastructure/controllers/namespaces.yaml",
       "apps/**/namespace.yaml"
-    ],
-    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json": [
-      "infrastructure/configs/postgresql-cluster.yaml"
     ],
     "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json": [
       "infrastructure/configs/*-ingress.yaml",
