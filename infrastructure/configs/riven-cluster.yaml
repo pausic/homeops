@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: planka
+  name: riven
   namespace: storage
 spec:
   instances: 1
@@ -9,9 +9,9 @@ spec:
   inheritedMetadata:
     annotations:
       reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
-      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "productivity"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "media"
       reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "productivity"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "media"
 
   postgresql:
     pg_hba:
@@ -20,8 +20,8 @@ spec:
 
   bootstrap:
     initdb:
-      database: planka
-      owner: planka
+      database: riven
+      owner: riven
 
   enableSuperuserAccess: true
 

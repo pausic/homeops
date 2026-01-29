@@ -29,7 +29,7 @@ spec:
               DATABASE_URL:
                 valueFrom:
                   secretKeyRef:
-                    name: shared-app
+                    name: planka-app
                     key: uri
               SECRET_KEY: "REDACTED"
               DEFAULT_ADMIN_EMAIL: "admin@localhost"

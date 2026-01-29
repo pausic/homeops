@@ -29,6 +29,9 @@
     ],
     "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/storageclass-storage-v1.json": [
       "infrastructure/configs/*-storageclass.yaml"
+    ],
+    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json": [
+      "infrastructure/configs/*-cluster.yaml"
     ]
   }
 }
