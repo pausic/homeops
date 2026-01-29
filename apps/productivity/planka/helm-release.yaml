@@ -29,7 +29,7 @@ spec:
               DATABASE_URL:
                 valueFrom:
                   secretKeyRef:
-                    name: shared-pguser-planka
+                    name: shared-app
                     key: uri
               SECRET_KEY: "REDACTED"
               DEFAULT_ADMIN_EMAIL: "admin@localhost"
