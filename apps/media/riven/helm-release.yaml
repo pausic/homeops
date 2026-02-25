@@ -12,11 +12,20 @@ spec:
   values:
     controllers:
       riven:
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
         containers:
           backend:
             image:
               repository: spoked/riven
               tag: latest
+            securityContext:
+              privileged: true
+              capabilities:
+                add:
+                  - SYS_ADMIN
             env:
               PUID: "1000"
               PGID: "1000"
@@ -87,6 +96,14 @@ spec:
             frontend:
               - path: /riven/data
                 subPath: frontend
+      dev-fuse:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/fuse
+        advancedMounts:
+          riven:
+            backend:
+              - path: /dev/fuse
       media-mount:
         enabled: true
         type: persistentVolumeClaim
@@ -97,6 +114,7 @@ spec:
           riven:
             backend:
               - path: /mount
+                mountPropagation: Bidirectional
       media-library:
         enabled: true
         type: persistentVolumeClaim
@@ -107,4 +125,14 @@ spec:
           riven:
             backend:
               - path: /mnt/library
+                mountPropagation: Bidirectional
+      dshm:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 1Gi
+        advancedMounts:
+          riven:
+            backend:
+              - path: /dev/shm
 
