@@ -22,6 +22,8 @@ spec:
     initdb:
       database: riven
       owner: riven
+      postInitSQL:
+        - ALTER USER riven WITH SUPERUSER;
 
   enableSuperuserAccess: true
 
