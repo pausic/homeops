@@ -39,6 +39,10 @@ spec:
             url: http://loki.monitoring.svc.cluster.local:3100
             access: proxy
             isDefault: true
+          - name: Prometheus
+            type: prometheus
+            url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+            access: proxy
 
     grafana.ini:
       server:
