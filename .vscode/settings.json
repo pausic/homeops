@@ -8,7 +8,14 @@
       "infrastructure/controllers/longhorn.yaml",
       "infrastructure/controllers/cnpg.yaml",
       "infrastructure/controllers/reflector.yaml",
+      "infrastructure/controllers/alloy.yaml",
       "apps/**/helm-release.yaml"
+    ],
+    "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/configmap-v1.json": [
+      "infrastructure/controllers/alloy-config.yaml"
+    ],
+    "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/daemonset-apps-v1.json": [
+      "apps/**/host-setup.yaml"
     ],
     "https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json": [
       "infrastructure/sources/*-helm-repo.yaml"
