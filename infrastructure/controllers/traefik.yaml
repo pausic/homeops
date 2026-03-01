@@ -56,3 +56,12 @@ spec:
             writeTimeout: 3600s
         http3:
           enabled: true
+
+    metrics:
+      prometheus:
+        enabled: true
+        addRoutersLabels: true
+        serviceMonitor:
+          enabled: true
+          namespace: kube-system
+          honorLabels: true
