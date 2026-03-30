@@ -25,7 +25,7 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: "Europe/Madrid"
-              BASE_URL: "https://planka.tailnet.core.local"
+              BASE_URL: "https://planka.internal"
               DATABASE_URL:
                 valueFrom:
                   secretKeyRef:

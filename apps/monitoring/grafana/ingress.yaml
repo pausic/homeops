@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`grafana.tailnet.core.local`)
+    - match: Host(`grafana.internal`)
       kind: Rule
       services:
         - name: grafana

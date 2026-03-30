@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.tailnet.core.local`)
+    - match: Host(`traefik.internal`)
       kind: Rule
       services:
         - name: api@internal

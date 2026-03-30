@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`longhorn.tailnet.core.local`)
+    - match: Host(`longhorn.internal`)
       kind: Rule
       services:
         - name: longhorn-frontend

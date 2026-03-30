@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`riven.tailnet.core.local`)
+    - match: Host(`riven.internal`)
       kind: Rule
       services:
         - name: riven-frontend

@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`planka.tailnet.core.local`)
+    - match: Host(`planka.internal`)
       kind: Rule
       services:
         - name: planka-app
