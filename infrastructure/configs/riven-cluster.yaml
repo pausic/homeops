@@ -15,8 +15,7 @@ spec:
 
   postgresql:
     pg_hba:
-      - hostssl all all all md5
-      - hostnossl all all all md5
+      - hostssl riven riven all scram-sha-256
 
   bootstrap:
     initdb:
