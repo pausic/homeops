@@ -31,10 +31,10 @@ spec:
                   secretKeyRef:
                     name: planka-app
                     key: uri
-              SECRET_KEY: "REDACTED"
+              SECRET_KEY: "${SECRET_PLANKA_KEY}"
               DEFAULT_ADMIN_EMAIL: "admin@localhost"
               DEFAULT_ADMIN_USERNAME: "admin"
-              DEFAULT_ADMIN_PASSWORD: "admin"
+              DEFAULT_ADMIN_PASSWORD: "${SECRET_PLANKA_ADMIN_PASSWORD}"
               DEFAULT_ADMIN_NAME: "Admin"
               TRUST_PROXY: "1"
             probes:

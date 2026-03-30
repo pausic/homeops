@@ -23,7 +23,7 @@ spec:
       retries: 3
   values:
     adminUser: admin
-    adminPassword: grafana
+    adminPassword: "${SECRET_GRAFANA_ADMIN_PASSWORD}"
 
     persistence:
       enabled: true

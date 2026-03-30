@@ -1,0 +1,3 @@
+creation_rules:
+  - encrypted_regex: "^(data|stringData)$"
+    age: age16aml0530sew4hsdqka7cgqy4etupmh97d59z9n4567spxn767ags63ahlv
