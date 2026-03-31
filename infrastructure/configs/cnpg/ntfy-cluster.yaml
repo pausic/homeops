@@ -1,0 +1,29 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ntfy
+  namespace: storage
+spec:
+  instances: 1
+
+  inheritedMetadata:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "monitoring"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "monitoring"
+
+  postgresql:
+    pg_hba:
+      - hostssl ntfy ntfy all scram-sha-256
+
+  bootstrap:
+    initdb:
+      database: ntfy
+      owner: ntfy
+
+  enableSuperuserAccess: true
+
+  storage:
+    storageClass: longhorn-retain
+    size: 512Mi
