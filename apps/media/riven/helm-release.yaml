@@ -58,7 +58,7 @@ spec:
             env:
               TZ: "Europe/Madrid"
               BACKEND_URL: "http://localhost:8080"
-              ORIGIN: "https://riven.internal"
+              ORIGIN: "https://riven.${SECRET_DOMAIN}"
               BACKEND_API_KEY: "${SECRET_RIVEN_API_KEY}"
               DATABASE_URL: /riven/data/riven.db
               AUTH_SECRET: "${SECRET_RIVEN_AUTH}"

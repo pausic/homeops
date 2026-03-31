@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.internal`)
+    - match: Host(`traefik.${SECRET_DOMAIN}`)
       kind: Rule
       services:
         - name: api@internal

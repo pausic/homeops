@@ -48,7 +48,6 @@ spec:
       websecure:
         tls:
           enabled: true
-          options: "default"
         transport:
           respondingTimeouts:
             readTimeout: 3600s
@@ -56,6 +55,12 @@ spec:
             writeTimeout: 3600s
         http3:
           enabled: true
+    tlsStore:
+      default:
+        certificates:
+          - secretName: wildcard-tls
+        defaultCertificate:
+          secretName: wildcard-tls
 
     metrics:
       prometheus:
