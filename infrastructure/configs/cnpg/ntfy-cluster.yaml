@@ -26,4 +26,4 @@ spec:
 
   storage:
     storageClass: longhorn-retain
-    size: 512Mi
+    size: 5Gi
