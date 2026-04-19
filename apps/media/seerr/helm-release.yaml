@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: seerr
+  namespace: media
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: seerr-chart
+    namespace: flux-system
+  values:
+    image:
+      registry: ghcr.io
+      repository: seerr-team/seerr
+      tag: v3.2.0
+
+    podSecurityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: false
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+
+    service:
+      type: ClusterIP
+      port: 80
+
+    config:
+      persistence:
+        size: 2Gi
+        accessModes:
+          - ReadWriteOnce
+
+    resources:
+      requests:
+        memory: 128Mi
+      limits:
+        memory: 512Mi
