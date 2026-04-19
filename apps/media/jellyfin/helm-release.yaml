@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: plex
+  name: jellyfin
   namespace: media
 spec:
   interval: 15m
@@ -16,19 +16,17 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/home-operations/plex
+              repository: ghcr.io/jellyfin/jellyfin
               pullPolicy: IfNotPresent
-              tag: 1.43.0.10492
+              tag: 10.11.8
             env:
               TZ: "Europe/Madrid"
-              PLEX_ADVERTISE_URL: "https://plex.${SECRET_DOMAIN}:443"
-              PLEX_NO_AUTH_NETWORKS: "192.168.1.0/24,100.64.0.0/10"
             resources:
-              # requests:
-              #   gpu.intel.com/i915: 1
+              requests:
+                gpu.intel.com/i915: 1
               limits:
-                # gpu.intel.com/i915: 1
-                memory: 1Gi
+                gpu.intel.com/i915: 1
+                memory: 5Gi
 
     defaultPodOptions:
       securityContext:
@@ -44,7 +42,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 32400
+            port: 8096
 
     persistence:
       config:
@@ -57,13 +55,16 @@ spec:
           main:
             main:
               - path: /config
+      cache:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          main:
+            main:
+              - path: /cache
       transcode:
         enabled: true
         type: emptyDir
-      tmp:
-        enabled: true
-        type: emptyDir
-        medium: Memory
       media:
         enabled: true
         type: hostPath
