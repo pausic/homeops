@@ -1,1 +1,9 @@
+.gitignore
+CLAUDE.md
+.claude/*
 age.key
+mise.toml
+TECHDEBT.md
+replacements.txt
+watch_*
+.blackhole/*
