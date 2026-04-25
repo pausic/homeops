@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
-      version: 6.53.0
+      version: 6.55.0
   install:
     remediation:
       retries: 3
