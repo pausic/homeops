@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "prHourlyLimit": 0,
+  "flux": {
+    "fileMatch": ["\\.yaml$"]
+  },
+  "helm-values": {
+    "fileMatch": ["\\.yaml$"]
+  },
+  "kubernetes": {
+    "enabled": false
+  },
+  "ignorePaths": [
+    "flux-system/**",
+    "clusters/homelab/flux-system/**"
+  ]
+}
