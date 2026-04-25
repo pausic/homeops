@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: traefik-charts
         namespace: flux-system
-      version: 38.0.1
+      version: 38.0.2
   install:
     createNamespace: true
     crds: CreateReplace
