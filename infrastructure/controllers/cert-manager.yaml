@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: cert-manager
         namespace: flux-system
-      version: "1.20.1"
+      version: "v1.20.2"
   install:
     crds: CreateReplace
     remediation:
