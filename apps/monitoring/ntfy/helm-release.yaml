@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: binwiederhier/ntfy
-              tag: latest
+              tag: v2.22.0
             args:
               - serve
             env:

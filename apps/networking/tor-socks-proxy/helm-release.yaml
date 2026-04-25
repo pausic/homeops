@@ -18,7 +18,7 @@ spec:
           main:
             image:
               repository: peterdavehello/tor-socks-proxy
-              tag: latest
+              tag: latest@sha256:0cc12d36d31265ce828c8422a7e163a0bf46755e90531f4c7d38a6149f071729
             resources:
               limits:
                 memory: 128Mi
