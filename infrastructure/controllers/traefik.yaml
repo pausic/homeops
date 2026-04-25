@@ -40,14 +40,16 @@ spec:
         allowCrossNamespace: true
     ports:
       web:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
       websecure:
-        tls:
-          enabled: true
+        http:
+          tls:
+            enabled: true
         transport:
           respondingTimeouts:
             readTimeout: 3600s
