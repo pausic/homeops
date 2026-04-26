@@ -61,6 +61,12 @@ spec:
                     port: 80
                   failureThreshold: 30
                   periodSeconds: 5
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+              seccompProfile:
+                type: RuntimeDefault
             resources:
               requests:
                 memory: 64Mi
@@ -68,6 +74,14 @@ spec:
               limits:
                 memory: 128Mi
                 cpu: 500m
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
 
     service:
       app:

@@ -19,6 +19,12 @@ spec:
               tag: v3.4.6
             env:
               TZ: "Europe/Madrid"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+              seccompProfile:
+                type: RuntimeDefault
             resources:
               requests:
                 cpu: 10m

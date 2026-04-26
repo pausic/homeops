@@ -21,6 +21,14 @@ spec:
             image:
               repository: ghcr.io/linuxserver/planka
               tag: 2.1.1@sha256:d9edbe0c5f0c8bba3be6534484988dfa69385503e9b3be074584ab4f060c100e
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop: ["ALL"]
+                add: ["CHOWN", "SETUID", "SETGID"]
+              seccompProfile:
+                type: RuntimeDefault
             env:
               PUID: "1000"
               PGID: "1000"
