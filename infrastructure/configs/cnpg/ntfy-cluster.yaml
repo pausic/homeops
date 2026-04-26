@@ -22,8 +22,6 @@ spec:
       database: ntfy
       owner: ntfy
 
-  enableSuperuserAccess: true
-
   storage:
     storageClass: longhorn-retain
     size: 5Gi

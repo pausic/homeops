@@ -22,8 +22,6 @@ spec:
       database: planka
       owner: planka
 
-  enableSuperuserAccess: true
-
   storage:
     storageClass: longhorn-retain
     size: 5Gi
