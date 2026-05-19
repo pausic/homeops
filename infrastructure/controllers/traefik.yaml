@@ -40,12 +40,7 @@ spec:
         allowCrossNamespace: true
     ports:
       web:
-        http:
-          redirections:
-            entryPoint:
-              to: websecure
-              scheme: https
-              permanent: true
+        exposedPort: 80
       websecure:
         http:
           tls:

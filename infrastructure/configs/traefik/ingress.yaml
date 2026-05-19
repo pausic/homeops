@@ -5,6 +5,7 @@ metadata:
   namespace: kube-system
 spec:
   entryPoints:
+    - web
     - websecure
   routes:
     - match: Host(`traefik.${SECRET_DOMAIN}`)
@@ -15,4 +16,5 @@ spec:
       middlewares:
         - name: trusted-only
           namespace: kube-system
-  tls: {}
+        - name: redirect-to-https
+          namespace: kube-system
