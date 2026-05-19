@@ -5,6 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   entryPoints:
+    - web
     - websecure
   routes:
     - match: Host(`grafana.${SECRET_DOMAIN}`)
@@ -14,5 +15,7 @@ spec:
           port: 80
       middlewares:
         - name: trusted-only
+          namespace: kube-system
+        - name: redirect-to-https
           namespace: kube-system
   tls: {}

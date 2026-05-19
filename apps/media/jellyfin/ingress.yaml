@@ -5,6 +5,7 @@ metadata:
   namespace: media
 spec:
   entryPoints:
+    - web
     - websecure
   routes:
     - match: Host(`jellyfin.${SECRET_DOMAIN}`)
