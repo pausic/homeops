@@ -18,7 +18,7 @@ spec:
             image:
               repository: ghcr.io/jellyfin/jellyfin
               pullPolicy: IfNotPresent
-              tag: 10.11.8
+              tag: 10.11.11
             env:
               TZ: "Europe/Madrid"
             resources:
