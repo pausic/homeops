@@ -18,3 +18,13 @@ spec:
           namespace: kube-system
         - name: redirect-to-https
           namespace: kube-system
+    - match: Host(`ha.${SECRET_PUBLIC_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: homeassistant
+          port: 8123
+      middlewares:
+        - name: trusted-only
+          namespace: kube-system
+        - name: redirect-to-https
+          namespace: kube-system
