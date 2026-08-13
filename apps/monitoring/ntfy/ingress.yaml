@@ -3,6 +3,13 @@ kind: IngressRoute
 metadata:
   name: ntfy
   namespace: monitoring
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: ntfy
+    gethomepage.dev/description: Push notifications
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/icon: ntfy.png
+    gethomepage.dev/href: https://ntfy.${SECRET_DOMAIN}
 spec:
   entryPoints:
     - web

@@ -3,6 +3,13 @@ kind: IngressRoute
 metadata:
   name: planka-app
   namespace: productivity
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: Planka
+    gethomepage.dev/description: Kanban board
+    gethomepage.dev/group: Apps
+    gethomepage.dev/icon: planka.png
+    gethomepage.dev/href: https://planka.${SECRET_DOMAIN}
 spec:
   entryPoints:
     - web

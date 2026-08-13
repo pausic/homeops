@@ -3,6 +3,13 @@ kind: IngressRoute
 metadata:
   name: homeassistant
   namespace: monitoring
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: Home Assistant
+    gethomepage.dev/description: Home automation
+    gethomepage.dev/group: Apps
+    gethomepage.dev/icon: home-assistant.png
+    gethomepage.dev/href: https://ha.${SECRET_PUBLIC_DOMAIN}
 spec:
   entryPoints:
     - web

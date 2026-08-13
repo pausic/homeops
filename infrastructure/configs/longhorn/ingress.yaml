@@ -3,6 +3,14 @@ kind: IngressRoute
 metadata:
   name: longhorn-dashboard
   namespace: longhorn-system
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/pod-selector: app=longhorn-ui
+    gethomepage.dev/name: Longhorn
+    gethomepage.dev/description: Distributed block storage
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/icon: longhorn.png
+    gethomepage.dev/href: https://longhorn.${SECRET_DOMAIN}
 spec:
   entryPoints:
     - web

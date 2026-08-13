@@ -3,6 +3,14 @@ kind: IngressRoute
 metadata:
   name: traefik-dashboard
   namespace: kube-system
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/app: traefik
+    gethomepage.dev/name: Traefik
+    gethomepage.dev/description: Ingress controller
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/icon: traefik.png
+    gethomepage.dev/href: https://traefik.${SECRET_DOMAIN}
 spec:
   entryPoints:
     - web
