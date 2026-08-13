@@ -1,0 +1,152 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: homepage
+  namespace: monitoring
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  values:
+    controllers:
+      homepage:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gethomepage/homepage
+              tag: v1.13.2
+            env:
+              TZ: "Europe/Amsterdam"
+              HOMEPAGE_ALLOWED_HOSTS: "homepage.${SECRET_DOMAIN},homepage.${SECRET_PUBLIC_DOMAIN}"
+            probes:
+              liveness:
+                enabled: true
+                type: TCP
+              readiness:
+                enabled: true
+                type: TCP
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              seccompProfile:
+                type: RuntimeDefault
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+    defaultPodOptions:
+      automountServiceAccountToken: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+    rbac:
+      roles:
+        homepage:
+          type: ClusterRole
+          rules:
+            - apiGroups: [""]
+              resources: [namespaces, pods, nodes]
+              verbs: [get, list]
+            - apiGroups: [networking.k8s.io]
+              resources: [ingresses]
+              verbs: [get, list]
+            - apiGroups: [traefik.io]
+              resources: [ingressroutes]
+              verbs: [get, list]
+            - apiGroups: [metrics.k8s.io]
+              resources: [nodes, pods]
+              verbs: [get, list]
+      bindings:
+        homepage:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: homepage
+          subjects:
+            - identifier: homepage
+    configMaps:
+      config:
+        data:
+          bookmarks.yaml: ""
+          docker.yaml: ""
+          services.yaml: ""
+          proxmox.yaml: ""
+          custom.css: ""
+          custom.js: ""
+          kubernetes.yaml: |
+            mode: cluster
+            ingress: true
+            traefik: true
+          settings.yaml: |
+            title: Homelab
+            headerStyle: clean
+            background:
+              image: https://4kwallpapers.com/images/wallpapers/lunar-tides-3840x2160-26444.jpg
+              blur: sm
+              brightness: 75
+              opacity: 50
+            layout:
+              Media:
+                style: row
+                columns: 3
+              Apps:
+                style: row
+                columns: 2
+              Infrastructure:
+                style: row
+                columns: 4
+          widgets.yaml: |
+            - kubernetes:
+                cluster:
+                  show: true
+                  cpu: true
+                  memory: true
+                  showLabel: true
+                  label: "homelab"
+                nodes:
+                  show: true
+                  cpu: true
+                  memory: true
+                  showLabel: true
+            - search:
+                provider: duckduckgo
+                target: _blank
+    persistence:
+      config:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /app/config/kubernetes.yaml
+            subPath: kubernetes.yaml
+          - path: /app/config/settings.yaml
+            subPath: settings.yaml
+          - path: /app/config/widgets.yaml
+            subPath: widgets.yaml
+          - path: /app/config/bookmarks.yaml
+            subPath: bookmarks.yaml
+          - path: /app/config/docker.yaml
+            subPath: docker.yaml
+          - path: /app/config/services.yaml
+            subPath: services.yaml
+          - path: /app/config/proxmox.yaml
+            subPath: proxmox.yaml
+          - path: /app/config/custom.css
+            subPath: custom.css
+          - path: /app/config/custom.js
+            subPath: custom.js
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config/logs
+    service:
+      app:
+        controller: homepage
+        ports:
+          http:
+            port: 3000
