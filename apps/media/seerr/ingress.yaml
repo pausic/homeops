@@ -11,6 +11,9 @@ metadata:
     gethomepage.dev/group: Media
     gethomepage.dev/icon: jellyseerr.png
     gethomepage.dev/href: https://seerr.${SECRET_DOMAIN}
+    gethomepage.dev/widget.type: seerr
+    gethomepage.dev/widget.url: http://seerr-seerr-chart.media
+    gethomepage.dev/widget.key: "${SECRET_SEERR_API_KEY}"
 spec:
   entryPoints:
     - web

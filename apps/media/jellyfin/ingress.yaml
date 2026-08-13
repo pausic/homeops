@@ -10,6 +10,9 @@ metadata:
     gethomepage.dev/group: Media
     gethomepage.dev/icon: jellyfin.png
     gethomepage.dev/href: https://jellyfin.${SECRET_PUBLIC_DOMAIN}
+    gethomepage.dev/widget.type: "jellyfin"
+    gethomepage.dev/widget.url: "http://jellyfin.media:8096"
+    gethomepage.dev/widget.key: "${SECRET_JELLYFIN_API_KEY}"
 spec:
   entryPoints:
     - web

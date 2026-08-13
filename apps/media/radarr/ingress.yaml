@@ -10,6 +10,9 @@ metadata:
     gethomepage.dev/group: Media
     gethomepage.dev/icon: radarr.png
     gethomepage.dev/href: https://radarr.${SECRET_DOMAIN}
+    gethomepage.dev/widget.type: radarr
+    gethomepage.dev/widget.url: http://radarr.media
+    gethomepage.dev/widget.key: "${SECRET_RADARR_API_KEY}"
 spec:
   entryPoints:
     - web

@@ -10,6 +10,9 @@ metadata:
     gethomepage.dev/group: Apps
     gethomepage.dev/icon: home-assistant.png
     gethomepage.dev/href: https://ha.${SECRET_PUBLIC_DOMAIN}
+    gethomepage.dev/widget.type: "homeassistant"
+    gethomepage.dev/widget.url: "http://homeassistant.monitoring:8123"
+    gethomepage.dev/widget.key: "${SECRET_HOMEASSISTANT_API_KEY}"
 spec:
   entryPoints:
     - web
