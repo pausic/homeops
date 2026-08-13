@@ -10,6 +10,9 @@ metadata:
     gethomepage.dev/group: Media
     gethomepage.dev/icon: prowlarr.png
     gethomepage.dev/href: https://prowlarr.${SECRET_DOMAIN}
+    gethomepage.dev/widget.type: prowlarr
+    gethomepage.dev/widget.url: http://prowlarr.media
+    gethomepage.dev/widget.key: "${SECRET_PROWLARR_API_KEY}"
 spec:
   entryPoints:
     - web

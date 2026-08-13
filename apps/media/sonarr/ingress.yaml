@@ -10,6 +10,9 @@ metadata:
     gethomepage.dev/group: Media
     gethomepage.dev/icon: sonarr.png
     gethomepage.dev/href: https://sonarr.${SECRET_DOMAIN}
+    gethomepage.dev/widget.type: sonarr
+    gethomepage.dev/widget.url: http://sonarr.media
+    gethomepage.dev/widget.key: "${SECRET_SONARR_API_KEY}"
 spec:
   entryPoints:
     - web
