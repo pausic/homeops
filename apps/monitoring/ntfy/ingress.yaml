@@ -10,6 +10,9 @@ metadata:
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/icon: ntfy.png
     gethomepage.dev/href: https://ntfy.${SECRET_DOMAIN}
+    gethomepage.dev/widget.type: "ntfy"
+    gethomepage.dev/widget.url: "http://ntfy.monitoring"
+    gethomepage.dev/widget.topic: "alerts"
 spec:
   entryPoints:
     - web
