@@ -3,6 +3,14 @@ kind: IngressRoute
 metadata:
   name: seerr
   namespace: media
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/app: seerr-chart
+    gethomepage.dev/name: Seerr
+    gethomepage.dev/description: Media requests
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: jellyseerr.png
+    gethomepage.dev/href: https://seerr.${SECRET_DOMAIN}
 spec:
   entryPoints:
     - web
