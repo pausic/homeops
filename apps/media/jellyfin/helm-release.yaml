@@ -74,3 +74,4 @@ spec:
             main:
               - path: /mnt
                 readOnly: true
+                mountPropagation: HostToContainer
