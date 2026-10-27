@@ -20,7 +20,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/planka
-              tag: 2.1.1@sha256:90ff2826f4fe1baee7632c858cba72679ec4f90c323b2606117b2ed46bc71c39
+              tag: 2.1.1@sha256:7c8795d810de7e0a9b23de7797213ac87979b9a187132364eca19a0f134fc889
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
