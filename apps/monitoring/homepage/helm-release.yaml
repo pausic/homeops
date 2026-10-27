@@ -19,7 +19,7 @@ spec:
               tag: v1.13.2
             env:
               TZ: "Europe/Amsterdam"
-              HOMEPAGE_ALLOWED_HOSTS: "homepage.${SECRET_DOMAIN},homepage.${SECRET_PUBLIC_DOMAIN}"
+              HOMEPAGE_ALLOWED_HOSTS: "home.${SECRET_DOMAIN},home.${SECRET_PUBLIC_DOMAIN}"
             probes:
               liveness:
                 enabled: true
