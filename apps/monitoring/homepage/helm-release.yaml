@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v1.13.2
+              tag: v2.7.0
             env:
               TZ: "Europe/Amsterdam"
               HOMEPAGE_ALLOWED_HOSTS: "home.${SECRET_DOMAIN},home.${SECRET_PUBLIC_DOMAIN}"
