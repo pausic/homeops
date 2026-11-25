@@ -1,0 +1,108 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mc-router
+  namespace: games
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+    controllers:
+      mc-router:
+        containers:
+          app:
+            image:
+              repository: itzg/mc-router
+              tag: 1.56.5
+            env:
+              IN_KUBE_CLUSTER: "true"
+              KUBE_NAMESPACE:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              AUTO_SCALE_UP: "true"
+              AUTO_SCALE_DOWN: "true"
+              AUTO_SCALE_DOWN_AFTER: 10m
+              API_BINDING: ":8080"
+              METRICS_BACKEND: prometheus
+              RECORD_LOGINS: "true"
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 8080
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 8080
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+              seccompProfile:
+                type: RuntimeDefault
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+    service:
+      mc-router:
+        controller: mc-router
+        type: LoadBalancer
+        ports:
+          minecraft:
+            port: 25565
+      api:
+        controller: mc-router
+        ports:
+          http:
+            port: 8080
+    serviceMonitor:
+      mc-router:
+        enabled: true
+        service:
+          identifier: api
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    rbac:
+      roles:
+        mc-router:
+          type: Role
+          rules:
+            - apiGroups: [""]
+              resources: [services]
+              verbs: [list, watch]
+            - apiGroups: [apps]
+              resources: [statefulsets]
+              verbs: [list, watch, patch]
+            - apiGroups: [apps]
+              resources: [statefulsets/scale]
+              verbs: [get, update]
+      bindings:
+        mc-router:
+          type: RoleBinding
+          roleRef:
+            identifier: mc-router
+          subjects:
+            - identifier: mc-router

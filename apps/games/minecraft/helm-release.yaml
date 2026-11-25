@@ -1,0 +1,76 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minecraft
+  namespace: games
+spec:
+  interval: 15m
+  timeout: 15m
+  chart:
+    spec:
+      chart: minecraft
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: itzg-charts
+        namespace: flux-system
+      version: 5.4.0
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    workloadAsStatefulSet: true
+    autoscaled: true
+    strategyType: RollingUpdate
+    image:
+      repository: itzg/minecraft-server
+      tag: 2026.11.1-java25
+      pullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 5Gi
+      limits:
+        memory: 5Gi
+    terminationGracePeriodSeconds: 120
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 3000
+      fsGroup: 2000
+      fsGroupChangePolicy: OnRootMismatch
+    startupProbe:
+      enabled: true
+      periodSeconds: 2
+      failureThreshold: 300
+    readinessProbe:
+      initialDelaySeconds: 0
+      periodSeconds: 2
+    livenessProbe:
+      initialDelaySeconds: 0
+    minecraftServer:
+      eula: "TRUE"
+      type: FABRIC
+      version: "26.3"
+      memory: 4G
+      modrinth:
+        projects:
+          - lithium
+          - ferrite-core
+      motd: "homelab"
+      # whitelist: "player1,player2"
+      ops: "Pau__"
+      serviceType: ClusterIP
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: "mc.${SECRET_DOMAIN}"
+      mc-router.itzg.me/defaultServer: "true"
+      mc-router.itzg.me/autoScaleAsleepMOTD: "Sleeping - join to wake me up"
+      mc-router.itzg.me/autoScaleLoadingMOTD: "Waking up..."
+      mc-router.itzg.me/autoScaleWaitTimeout: "120s"
+    persistence:
+      dataDir:
+        enabled: true
+        existingClaim: minecraft-data

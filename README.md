@@ -37,7 +37,7 @@ flux-system (bootstrap)
   └─ infra-sources (HelmRepositories, OCIRepositories)
        └─ infra-controllers (Traefik, Longhorn, CNPG, cert-manager, ...)
             └─ infra-configs (StorageClass, PG Clusters, Middleware, Certificates)
-                 └─ apps (Monitoring, Media, Networking, Productivity)
+                 └─ apps (Monitoring, Media, Networking, Productivity, Games)
 ```
 
 ## :telescope: Namespaces
@@ -50,6 +50,7 @@ flux-system (bootstrap)
 - [`media`](./apps/media/) 
 - [`networking`](./apps/networking/) 
 - [`productivity`](./apps/productivity/) 
+- [`games`](./apps/games/) 
 
 ## :file_folder: Repository Structure
 
@@ -64,5 +65,6 @@ homeops/
     ├── monitoring/            # Observability stack
     ├── media/                 # Media management
     ├── networking/            # Network services
-    └── productivity/          # Productivity tools
+    ├── productivity/          # Productivity tools
+    └── games/                 # Minecraft (scale-to-zero via mc-router)
 ```
