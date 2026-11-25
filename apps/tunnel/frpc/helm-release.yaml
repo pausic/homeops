@@ -1,0 +1,77 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: frpc
+  namespace: tunnel
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+    controllers:
+      frpc:
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              repository: fatedier/frpc
+              tag: v0.72.0 # keep in step with frps on the VPS
+            args: ["-c", "/etc/frp/frpc.toml"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 16Mi
+              limits:
+                memory: 64Mi
+    secrets:
+      config:
+        stringData:
+          frpc.toml: |
+            serverAddr = "${SECRET_FRP_SERVER_IP}"
+            serverPort = 7000
+            loginFailExit = false
+            auth.method = "token"
+            auth.token = "${SECRET_FRP_TOKEN}"
+            transport.tls.serverName = "frps.homeops"
+            transport.tls.trustedCaFile = "/etc/frp/ca.crt"
+            log.to = "console"
+
+            [[proxies]]
+            name = "minecraft"
+            type = "tcp"
+            localIP = "mc-router.games"
+            localPort = 25565
+            remotePort = 25565
+          ca.crt: |
+            -----BEGIN CERTIFICATE-----
+            MIIBZTCCAQygAwIBAgIUa1EDgHX/nMIU326ejuPQ8FiBix8wCgYIKoZIzj0EAwIw
+            GTEXMBUGA1UEAwwOaG9tZW9wcy1mcnAtY2EwHhcNMjYxMTI1MTA1NzE0WhcNMzYx
+            MTIyMTA1NzE0WjAZMRcwFQYDVQQDDA5ob21lb3BzLWZycC1jYTBZMBMGByqGSM49
+            AgEGCCqGSM49AwEHA0IABOk8z+cOCSz513FhiAWZtYmTR6PO9S9AS/AThQ0aQD3b
+            c4gMC5HwE1lbX0YGZA5vthfIbpSTd9yMbrT/FtFpqb2jMjAwMB0GA1UdDgQWBBRa
+            siR69RdsG2PwiAQGT5CYtLORmTAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49BAMC
+            A0cAMEQCIFsAVfBEvx3cgLs3d3bToqfGSXm0afpP7c33YyZ8n8rBAiA5iiTZ6tRz
+            Z9szhTYqyr5cAtLeQPonypV711PZecCbdg==
+            -----END CERTIFICATE-----
+    persistence:
+      config:
+        type: secret
+        identifier: config
+        globalMounts:
+          - path: /etc/frp
+            readOnly: true

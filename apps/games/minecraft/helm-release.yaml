@@ -51,6 +51,8 @@ spec:
       periodSeconds: 2
     livenessProbe:
       initialDelaySeconds: 0
+    extraEnv:
+      ENFORCE_WHITELIST: "true"
     minecraftServer:
       eula: "TRUE"
       type: FABRIC
@@ -58,17 +60,17 @@ spec:
       memory: 4G
       modrinth:
         projects:
-          - lithium
-          - ferrite-core
-      motd: "homelab"
-      # whitelist: "player1,player2"
+          - lithium:Lal8mJGR # mc26.3-0.26.4-fabric
+          - ferrite-core:d5ddUdiB # 9.0.0-fabric
+      motd: "deadlock lovers"
+      onlineMode: true
+      whitelist: "${MC_WHITELIST}"
       ops: "Pau__"
       serviceType: ClusterIP
     serviceAnnotations:
-      mc-router.itzg.me/externalServerName: "mc.${SECRET_DOMAIN}"
-      mc-router.itzg.me/defaultServer: "true"
-      mc-router.itzg.me/autoScaleAsleepMOTD: "Sleeping - join to wake me up"
-      mc-router.itzg.me/autoScaleLoadingMOTD: "Waking up..."
+      mc-router.itzg.me/externalServerName: "mc.${SECRET_DOMAIN},mc.${SECRET_PUBLIC_DOMAIN}"
+      mc-router.itzg.me/autoScaleAsleepMOTD: "Apagado - Conectate para encender"
+      mc-router.itzg.me/autoScaleLoadingMOTD: "Un momentito..."
       mc-router.itzg.me/autoScaleWaitTimeout: "120s"
     persistence:
       dataDir:

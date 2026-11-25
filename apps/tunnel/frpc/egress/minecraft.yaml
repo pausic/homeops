@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frpc-egress-minecraft
+  namespace: tunnel
+spec:
+  podSelector: {}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: games
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: mc-router
+      ports:
+        - protocol: TCP
+          port: 25565

@@ -27,6 +27,7 @@ This repository defines the state of my single-node [k3s](https://k3s.io/) clust
 | **Certificates** | [cert-manager](https://cert-manager.io/) (self-signed CA) |
 | **Databases** | [CloudNativePG](https://cloudnative-pg.io/) |
 | **Secrets** | [SOPS](https://github.com/getsops/sops) |
+| **Public entry** | [frp](https://github.com/fatedier/frp) via VPS relay, see [`tunnel`](./apps/tunnel/) |
 
 ## :hourglass_flowing_sand: GitOps Flow
 
@@ -37,7 +38,7 @@ flux-system (bootstrap)
   └─ infra-sources (HelmRepositories, OCIRepositories)
        └─ infra-controllers (Traefik, Longhorn, CNPG, cert-manager, ...)
             └─ infra-configs (StorageClass, PG Clusters, Middleware, Certificates)
-                 └─ apps (Monitoring, Media, Networking, Productivity, Games)
+                 └─ apps (Monitoring, Media, Networking, Productivity, Games, Tunnel)
 ```
 
 ## :telescope: Namespaces
@@ -51,6 +52,7 @@ flux-system (bootstrap)
 - [`networking`](./apps/networking/) 
 - [`productivity`](./apps/productivity/) 
 - [`games`](./apps/games/) 
+- [`tunnel`](./apps/tunnel/) 
 
 ## :file_folder: Repository Structure
 
@@ -66,5 +68,6 @@ homeops/
     ├── media/                 # Media management
     ├── networking/            # Network services
     ├── productivity/          # Productivity tools
-    └── games/                 # Minecraft (scale-to-zero via mc-router)
+    ├── games/                 # Minecraft (scale-to-zero via mc-router)
+    └── tunnel/                # frpc: the only public entry point
 ```
