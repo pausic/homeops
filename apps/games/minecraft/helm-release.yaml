@@ -62,11 +62,25 @@ spec:
         projects:
           - lithium:Lal8mJGR # mc26.3-0.26.4-fabric
           - ferrite-core:d5ddUdiB # 9.0.0-fabric
+          - fabric-api:Zns5SSRA # 0.166.2+26.3 (required by fabricexporter, chunky)
+          - spark:e3hsPc1o # 1.10.187-fabric
+          - fabricexporter:oWz8OvaM # 1.0.23+26.3
+          - chunky:86FKD9qx # 1.5.66
+          - tabtps:prer9z2m # 1.4.3 (fabric-mc26.3)
       motd: "deadlock lovers"
       onlineMode: true
       whitelist: "${MC_WHITELIST}"
       ops: "Pau__"
       serviceType: ClusterIP
+      extraPorts:
+        - name: metrics # fabricexporter
+          containerPort: 25585
+          protocol: TCP
+          service:
+            enabled: true
+            embedded: false
+            type: ClusterIP
+            port: 25585
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: "mc.${SECRET_DOMAIN},mc.${SECRET_PUBLIC_DOMAIN}"
       mc-router.itzg.me/autoScaleAsleepMOTD: "Apagado - Conectate para encender"
@@ -76,3 +90,16 @@ spec:
       dataDir:
         enabled: true
         existingClaim: minecraft-data
+    extraDeploy:
+      - apiVersion: monitoring.coreos.com/v1
+        kind: ServiceMonitor
+        metadata:
+          name: minecraft
+        spec:
+          selector:
+            matchLabels:
+              app: minecraft-metrics
+          endpoints:
+            - port: metrics
+              path: /metrics
+              interval: 1m
